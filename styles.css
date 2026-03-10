@@ -1,13 +1,8 @@
 :root {
-    --bg-light: #ffffff;
-    --text-light: #000000;
-    --card-bg-light: #f4f4f4;
-    --hover-light: #e0e0e0;
-
-    --bg-dark: #000000;
-    --text-dark: #ffffff;
-    --card-bg-dark: #1a1a1a;
-    --hover-dark: #333;
+    --bg: #000000;
+    --text: #ffffff;
+    --card-bg: #1a1a1a;
+    --hover: #333;
 
     --mclaren-orange: #ff8000;
     --mclaren-black: #000000;
@@ -19,22 +14,6 @@
     --glitch-color-1: #ff9933;
     --glitch-color-2: #ff6600;
     --glitch-color-3: #ff9933;
-}
-
-[data-theme="dark"] {
-    --bg: var(--bg-dark);
-    --text: var(--text-dark);
-    --card-bg: var(--card-bg-dark);
-    --hover: var(--hover-dark);
-    --glitch-bg: #000000;
-}
-
-[data-theme="light"] {
-    --bg: var(--bg-light);
-    --text: var(--text-light);
-    --card-bg: var(--card-bg-light);
-    --hover: var(--hover-light);
-    --glitch-bg: #f4f4f4;
 }
 
 * {
@@ -92,7 +71,7 @@ body::before {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--mclaren-orange) 0%, var(--mclaren-black) 50%, var(--mclaren-orange) 100%);
+    background: var(--mclaren-orange);
 }
 
 .avatar {
@@ -111,7 +90,7 @@ h1 {
 
 .bio {
     font-size: 1rem;
-    color: #888;
+    color: #ffffff;
     margin-bottom: 1.5rem;
 }
 
@@ -169,13 +148,13 @@ h1 {
 .footer {
     margin-top: 2rem;
     font-size: 0.8rem;
-    color: #666;
+    color: #ffffff;
 }
 
 .credit {
     margin-top: 0.75rem;
     font-size: 0.75rem;
-    color: #777;
+    color: #ffffff;
     opacity: 0;
 }
 
@@ -185,22 +164,6 @@ h1 {
     transition: var(--transition);
 }
 
-.theme-toggle {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    color: var(--text);
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.theme-toggle:hover {
-    opacity: 0.8;
-}
-
 #glitch-canvas {
     position: fixed;
     top: 0;
@@ -208,6 +171,7 @@ h1 {
     width: 100%;
     height: 100%;
     z-index: -2;
+    pointer-events: none;
 }
 
 .glitch-vignette {
@@ -218,12 +182,342 @@ h1 {
     height: 100%;
     pointer-events: none;
     z-index: -1;
-}
-
-[data-theme="dark"] .glitch-vignette {
     background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 70%, rgba(0, 0, 0, 0.7) 100%);
 }
 
-[data-theme="light"] .glitch-vignette {
-    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.05) 70%, rgba(0, 0, 0, 0.15) 100%);
+/* Terminal Resume Styles */
+.back-link {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    color: #00ff00;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    background: #0a0a0a;
+    border: 1px solid #00ff00;
+    font-family: 'Ubuntu Mono', 'Fira Code', 'Courier New', monospace;
+    transition: var(--transition);
+    z-index: 100;
+}
+
+.back-link:hover {
+    background: #00ff00;
+    color: #000000;
+}
+
+.terminal {
+    max-width: 900px;
+    width: 100%;
+    background: #000000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    font-family: 'Ubuntu Mono', 'Fira Code', 'Courier New', monospace;
+    margin-top: 4rem;
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+.terminal-header {
+    background: #1a1a1a;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.terminal-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.debug-btn {
+    background: #ff8000;
+    color: #000000;
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0.8;
+}
+
+.debug-btn:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(255, 128, 0, 0.3);
+}
+
+.debug-btn:active {
+    transform: scale(0.95);
+}
+
+.terminal-title {
+    color: #00ff00;
+    font-size: 0.9rem;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.terminal-buttons span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.btn-close { background: #ff5f56; }
+.btn-minimize { background: #ffbd2e; }
+.btn-maximize { background: #27ca40; }
+
+.terminal-body {
+    padding: 1.5rem;
+    color: #00ff00;
+    min-height: 600px;
+    position: relative;
+    z-index: 1;
+}
+
+.prompt {
+    color: #ff8000;
+    margin-right: 0.5rem;
+}
+
+.highlight {
+    color: #ff8000;
+    font-weight: bold;
+}
+
+.ascii-art {
+    color: #00ff00;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.welcome-text {
+    margin-bottom: 1rem;
+}
+
+.command-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+#commandInput {
+    background: transparent;
+    border: none;
+    color: #00ff00;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    flex: 1;
+    min-width: 0;
+    caret-color: #ff8000;
+    text-rendering: auto;
+    padding: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+#commandInput:focus {
+    background: rgba(255, 128, 0, 0.1);
+    border-radius: 4px;
+}
+
+#commandInput::placeholder {
+    color: #006600;
+    opacity: 0.7;
+}
+
+.output {
+    margin-top: 1rem;
+}
+
+.command-output {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.command-output.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes inputPulse {
+    0% { background-color: rgba(255, 128, 0, 0.1); }
+    50% { background-color: rgba(255, 128, 0, 0.3); }
+    100% { background-color: rgba(255, 128, 0, 0.1); }
+}
+
+#commandInput.executing {
+    animation: inputPulse 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 128, 0, 0.4);
+    border-radius: 4px;
+}
+
+.timeline-content {
+    background: #0a0a0a;
+    border-left: 3px solid #ff8000;
+    padding: 0.75rem 1rem;
+    margin: 0.5rem 0;
+    color: #00ff00;
+}
+
+.timeline-content .date {
+    color: #00cc00;
+    font-size: 0.85rem;
+}
+
+.timeline-content .desc {
+    color: #00dd00;
+    font-size: 0.9rem;
+}
+
+.skills-output {
+    background: #0a0a0a;
+    padding: 1rem;
+    border-left: 3px solid #ff8000;
+}
+
+.skill-list {
+    color: #00dd00;
+    margin-top: 0.25rem;
+}
+
+.hint {
+    color: #00cc00;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+    font-style: italic;
+}
+
+.error {
+    color: #ff4444;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.error {
+    color: #ff4444;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.boot-sequence {
+    font-family: 'Ubuntu Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+.boot-sequence p {
+    color: #00ff00;
+    margin: 0.25rem 0;
+    animation: bootText 0.5s ease;
+}
+
+@keyframes bootText {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Glitch background for terminal */
+#glitch-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -3;
+    pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .terminal {
+        margin: 1rem;
+        margin-top: 4rem;
+        max-width: 100%;
+    }
+
+    .terminal-body {
+        padding: 1rem;
+        min-height: 500px;
+    }
+
+    .ascii-art {
+        font-size: 0.5rem;
+    }
+
+    .back-link {
+        top: 0.5rem;
+        left: 0.5rem;
+        font-size: 0.75rem;
+        padding: 0.4rem 0.5rem;
+    }
+
+    .terminal-header {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .terminal-title {
+        font-size: 0.8rem;
+    }
+
+    .debug-btn {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.7rem;
+    }
+
+    .terminal-buttons span {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .terminal {
+        margin: 0.5rem;
+        margin-top: 3rem;
+    }
+
+    .terminal-body {
+        padding: 0.75rem;
+        min-height: 400px;
+    }
+
+    .ascii-art {
+        font-size: 0.4rem;
+    }
+
+    .command-line {
+        font-size: 0.9rem;
+    }
+
+    #commandInput {
+        font-size: 0.9rem;
+    }
+
+    .back-link {
+        top: 0.25rem;
+        left: 0.25rem;
+        font-size: 0.7rem;
+        padding: 0.3rem 0.4rem;
+    }
+
+    .debug-btn {
+        padding: 0.15rem 0.3rem;
+        font-size: 0.65rem;
+    }
 }

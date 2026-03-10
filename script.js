@@ -1,22 +1,6 @@
-// Theme toggle functionality
-const toggle = document.getElementById("toggleTheme");
-const root = document.documentElement;
-
-const storedTheme = localStorage.getItem("theme");
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-const theme = storedTheme || (prefersDark ? 'dark' : 'light');
-root.setAttribute("data-theme", theme);
-
-toggle.addEventListener("click", () => {
-    const current = root.getAttribute("data-theme");
-    const newTheme = current === "dark" ? "light" : "dark";
-    root.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-});
-
 // Dynamic Year
-document.getElementById("year").textContent = new Date().getFullYear();
+const yearEl = document.getElementById("year");
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // Letter Glitch Background Effect (React Bits style)
 (function() {
@@ -31,17 +15,13 @@ document.getElementById("year").textContent = new Date().getFullYear();
     const ctx = canvas.getContext('2d');
     
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>,0123456789';
-    const colors = {
-        dark: ['#ff9933', '#ff6600', '#ffaa00'],
-        light: ['#cc6600', '#ff6600', '#ff8800']
-    };
+    const colors = ['#ff9933', '#ff6600', '#ffaa00'];
     
     let fontSize = 16;
     let charWidth = 10;
     let charHeight = 20;
     let updateSpeed = 150;
     let lastUpdate = 0;
-    let currentColors = colors.dark;
     let grid = [];
     let cols, rows;
     
@@ -58,25 +38,15 @@ document.getElementById("year").textContent = new Date().getFullYear();
         for (let i = 0; i < cols * rows; i++) {
             grid.push({
                 char: chars[Math.floor(Math.random() * chars.length)],
-                color: currentColors[Math.floor(Math.random() * currentColors.length)],
+                color: colors[Math.floor(Math.random() * colors.length)],
                 targetChar: chars[Math.floor(Math.random() * chars.length)],
                 changeProgress: 0
             });
         }
     }
     
-    function getTheme() {
-        return document.documentElement.getAttribute('data-theme') || 'dark';
-    }
-    
-    function updateColors() {
-        const theme = getTheme();
-        currentColors = colors[theme];
-    }
-    
     function draw(timestamp) {
-        const theme = getTheme();
-        canvas.style.backgroundColor = theme === 'dark' ? '#000000' : '#f4f4f4';
+        canvas.style.backgroundColor = '#000000';
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.font = `${fontSize}px monospace`;
@@ -87,7 +57,7 @@ document.getElementById("year").textContent = new Date().getFullYear();
             for (let i = 0; i < updateCount; i++) {
                 const idx = Math.floor(Math.random() * grid.length);
                 grid[idx].targetChar = chars[Math.floor(Math.random() * chars.length)];
-                grid[idx].color = currentColors[Math.floor(Math.random() * currentColors.length)];
+                grid[idx].color = colors[Math.floor(Math.random() * colors.length)];
                 grid[idx].changeProgress = 0;
             }
             lastUpdate = timestamp;
@@ -114,9 +84,114 @@ document.getElementById("year").textContent = new Date().getFullYear();
     
     window.addEventListener('resize', resize);
     resize();
-    updateColors();
     draw();
+})();
+
+// Terminal Resume Functionality
+(function() {
+    const commandInput = document.getElementById('commandInput');
+
+    // Initialize terminal functionality
+    if (commandInput) {
+        // Focus input immediately
+        commandInput.focus();
+        
+        // Add event listener for command input
+        commandInput.addEventListener('keydown', handleKeydown);
+        
+        // Add input styling and placeholder
+        commandInput.placeholder = 'Type a command...';
+        
+        // Add input feedback
+        commandInput.addEventListener('input', () => {
+            commandInput.style.caretColor = '#ff8000';
+        });
+    }
+
+    // Keep focus on input when clicking anywhere in the terminal
+    const terminal = document.querySelector('.terminal');
+    const terminalBody = document.querySelector('.terminal-body');
     
-    const observer = new MutationObserver(updateColors);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    if (terminal) {
+        terminal.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (commandInput) {
+                commandInput.focus();
+            }
+        });
+    }
+
+    if (terminalBody) {
+        terminalBody.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (commandInput) {
+                commandInput.focus();
+            }
+        });
+    }
+
+    function handleKeydown(e) {
+        if (e.key === 'Enter') {
+            const command = commandInput.value.trim().toLowerCase();
+            handleCommand(command);
+            commandInput.value = '';
+        }
+    }
+
+function handleCommand(cmd) {
+        const outputs = document.querySelectorAll('.command-output');
+        const output = document.getElementById('output');
+        const commandLine = document.getElementById('commandLine');
+        
+        // Hide all outputs first
+        outputs.forEach(el => el.style.display = 'none');
+        
+        // Show command echo - insert before command line
+        const commandEcho = document.createElement('div');
+        commandEcho.className = 'command-output';
+        commandEcho.style.display = 'block';
+        commandEcho.innerHTML = `<p><span class="prompt">guest@linux:~$</span> ${cmd}</p><br>`;
+        output.insertBefore(commandEcho, commandLine);
+        
+        // Show appropriate output
+        const commandMap = {
+            'experience': 'experience',
+            'cat experience.txt': 'experience',
+            'education': 'education',
+            'cat education.txt': 'education',
+            'skills': 'skills',
+            'ls skills': 'skills',
+            'ls -la skills': 'skills',
+            'interests': 'interests',
+            'cat interests.txt': 'interests',
+            'help': 'help'
+        };
+
+        const outputId = commandMap[cmd];
+        
+        if (outputId) {
+            const outputEl = document.getElementById(outputId);
+            if (outputEl) {
+                const clone = outputEl.cloneNode(true);
+                clone.style.display = 'block';
+                clone.removeAttribute('id');
+                output.insertBefore(clone, commandLine);
+            }
+        } else if (cmd === 'clear') {
+            // Clear command - remove all dynamic outputs
+            const dynamicOutputs = output.querySelectorAll('.command-output:not([id])');
+            dynamicOutputs.forEach(el => el.remove());
+            return;
+        } else if (cmd !== '') {
+            // Unknown command - show error
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'command-output';
+            errorMsg.style.display = 'block';
+            errorMsg.innerHTML = `<p class="error">Command not found: ${cmd}</p><p class="hint">Type 'help' for available commands</p><br>`;
+            output.insertBefore(errorMsg, commandLine);
+        }
+        
+        // Scroll to bottom
+        commandLine.scrollIntoView({ behavior: 'smooth' });
+    }
 })();

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nick Tatlian | Resume Terminal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">&larr; Back to Home</a>
+    
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <span class="btn-close"></span>
+                <span class="btn-minimize"></span>
+                <span class="btn-maximize"></span>
+            </div>
+            <span class="terminal-title">guest@nicktatlian:~</span>
+            <div class="terminal-controls">
+                <button class="debug-btn" onclick="location.reload()">REBOOT</button>
+            </div>
+        </div>
+        
+        <div class="terminal-body">
+            <div class="boot-sequence" id="bootSequence">
+                <p>[ OK ] Initializing resume system...</p>
+                <p>[ OK ] Loading user profile: nicktatlian</p>
+                <p>[ OK ] Mounting /dev/resume</p>
+                <p>[ OK ] System ready.</p>
+                <br>
+            </div>
+            
+            <pre class="ascii-art">
+ /$$      /$$ /$$     /$$       /$$$$$$$  /$$$$$$$$  /$$$$$$  /$$   /$$ /$$      /$$ /$$$$$$$$
+| $$$    /$$$|  $$   /$$/      | $$__  $$| $$_____/ /$$__  $$| $$  | $$| $$$    /$$$| $$_____/
+| $$$$  /$$$$ \  $$ /$$/       | $$  \ $$| $$      | $$  \__/| $$  | $$| $$$$  /$$$$| $$      
+| $$ $$/$$ $$  \  $$$$/        | $$$$$$$/| $$$$$   |  $$$$$$ | $$  | $$| $$ $$/$$ $$| $$$$$   
+| $$  $$$| $$   \  $$/         | $$__  $$| $$__/    \____  $$| $$  | $$| $$  $$$| $$| $$__/   
+| $$\  $ | $$    | $$          | $$  \ $$| $$       /$$  \ $$| $$  | $$| $$\  $ | $$| $$      
+| $$ \/  | $$    | $$          | $$  | $$| $$$$$$$$|  $$$$$$/|  $$$$$$/| $$ \/  | $$| $$$$$$$$
+|__/     |__/    |__/          |__/  |__/|________/ \______/  \______/ |__/     |__/|________/                                                                                                              
+            </pre>
+            
+            <div class="welcome-text">
+                <p>Welcome to Nick Tatlian's interactive resume.</p>
+                <p>Type <span class="highlight">help</span> for available commands.</p>
+                <br>
+            </div>
+            
+            <div class="output" id="output">
+                <div class="command-line" id="commandLine">
+                    <span class="prompt">guest@linux:~$</span>
+                    <input type="text" id="commandInput" autofocus autocomplete="off" spellcheck="false">
+                </div>
+                <div id="help" class="command-output">
+                    <p class="highlight">Available Commands:</p>
+                    <p>  experience   - View work experience</p>
+                    <p>  education    - View education history</p>
+                    <p>  skills       - View technical skills</p>
+                    <p>  interests    - View personal interests</p>
+                    <p>  clear        - Clear terminal</p>
+                    <p>  help         - Show this help message</p>
+                    <br>
+                </div>
+                
+                <div id="experience" class="command-output">
+                    <p class="highlight">=== Work Experience ===</p>
+                    <br>
+                    <div class="timeline-content">
+                        <p class="highlight">AI Teacher</p>
+                        <p class="date">AI Camp. | 2025 - 2026</p>
+                        <p class="desc">• Working with an agile multi-disciplinary team</p>
+                        <p class="desc">• Taught creative applications for artificial intelligence</p>
+                        <p class="desc">• Unlocking curiosity in technology</p>
+                    </div>
+                    <div class="timeline-content">
+                        <p class="highlight">Remedial Massage Therapist</p>
+                        <p class="date">Self Employed | 2023 - Present</p>
+                        <p class="desc">• Addressing individual client needs using a specialised skill set</p>
+                        <p class="desc">• Maintaining accurate client records, and documentation to track progress and outcomes</p>
+                        <p class="desc">• Excel at collaborating with healthcare professionals to ensure optimal care and recovery.</p>
+                    </div>
+                    <br>
+                </div>
+                
+                <div id="education" class="command-output">
+                    <p class="highlight">=== Education ===</p>
+                    <br>
+                    <div class="timeline-content">
+                        <p class="highlight">Bachelor of Information Technology</p>
+                        <p class="date">Adelaide University (Formerly UofA) | 2024 - 2027 (Expected)</p>
+                        <p class="desc">• Major: Networking & Cybersecurity</p>
+                        <p class="desc">• Relevant Coursework: Network Security/Design, Programming, Ethical Hacking</p>
+                        <p class="desc">• GPA: 6.33/7.0</p>
+                    </div>
+                    <div class="timeline-content">
+                        <p class="highlight">Diploma of Remedial Massage</p>
+                        <p class="date">Evolve College | 2022- 2023</p>
+                        <p class="desc">• Remedial Massage & Sports Massage</p>
+                    </div>
+                    <br>
+                </div>
+                
+                <div id="skills" class="command-output">
+                    <p class="highlight">=== Technical Skills ===</p>
+                    <br>
+                    <div class="skills-output">
+                        <p class="highlight">Programming Languages:</p>
+                        <p class="skill-list">  Python, Bash, JavaScript, C++, SQL</p>
+                        <br>
+                        <p class="highlight">Security Tools:</p>
+                        <p class="skill-list">  Wireshark, Nmap, Metasploit, Burp Suite</p>
+                        <br>
+                        <p class="highlight">Systems & Platforms:</p>
+                        <p class="skill-list">  Linux (Fedora, Kali, Arch), VMware, Docker</p>
+                        <br>
+                        <p class="highlight">Other Skills:</p>
+                        <p class="skill-list">  Git, Networking (TCP/IP, DNS, VPN), Homelab Administration</p>
+                    </div>
+                    <br>
+                </div>
+                
+                <div id="interests" class="command-output">
+                    <p class="highlight">=== Personal Interests ===</p>
+                    <br>
+                    <div class="skills-output">
+                        <p class="highlight">Homelab & Self-Hosting:</p>
+                        <p class="skill-list">  Running personal servers, Docker containers, media servers</p>
+                        <br>
+                        <p class="highlight">Privacy & Security:</p>
+                        <p class="skill-list">  De-googling, GrapheneOS, privacy-focused tools</p>
+                        <br>
+                        <p class="highlight">Formula 1:</p>
+                        <p class="skill-list">  McLaren fan, following races and technical developments</p>
+                        <br>
+                        <p class="highlight">Open Source:</p>
+                        <p class="skill-list">  Contributing to and exploring open-source security projects</p>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
